@@ -2,21 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CatalogController;
 
-// Home redirect to login
+// ================= AUTH ROUTES =================
 Route::get('/', function () {
     return redirect('/login');
 });
 
-// Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-
-// Logout Route
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// ================= PROTECTED ROUTES =================
+Route::middleware(['auth'])->group(function () {
+    
+    // User Dashboard
+    Route::get('/user/dashboard', function () {
+        return view('user.dashboard');
+    })->name('user.dashboard');
 
-// user dashboard
-Route::get('/user/dashboard', function () {
-    return view('user.dashboard');
-})->middleware(['auth', 'role:user']);
+    // ================= KATALOG ROUTES =================
+    Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog');
+    Route::get('/katalog/{category}', [CatalogController::class, 'index'])->name('katalog.category');
+    
+});
