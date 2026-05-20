@@ -12,11 +12,11 @@
                 extend: {
                     colors: {
                         nexus: {
-                            dark: '#0D1F0D',      // Sidebar & Banner
-                            main: '#1B3A1B',      // Cards hijau
-                            light: '#2E5C2E',     // Accent
-                            accent: '#E8F5E9',    // Tombol
-                            green: '#1B5E20',     // Primary green
+                            dark: '#0D1F0D',      
+                            main: '#1B3A1B',      
+                            light: '#2E5C2E',     
+                            accent: '#E8F5E9',    
+                            green: '#1B5E20',     
                         }
                     },
                     fontFamily: {
@@ -121,10 +121,10 @@
                         <p class="text-gray-300 text-sm mt-3">Pinjam aset yang anda butuhkan untuk<br>mendukung pekerjaan dan kegiatan anda</p>
                     </div>
                     <div class="hidden md:flex items-end gap-2">
-                        <img src="{{ asset('foto/hero-laptop.png') }}" class="w-24 drop-shadow-2xl transform -rotate-12">
-                        <img src="{{ asset('foto/hero-camera.png') }}" class="w-32 drop-shadow-2xl">
-                        <img src="{{ asset('foto/hero-phone.png') }}" class="w-24 drop-shadow-2xl transform rotate-6">
-                        <img src="{{ asset('foto/hero-ps.png') }}" class="w-28 drop-shadow-2xl transform rotate-12">
+                        <img src="{{ asset('foto/image-removebg-preview.png') }}" class="w-24 drop-shadow-2xl transform -rotate-12">
+                        <img src="{{ asset('foto/camera.png') }}" class="w-32 drop-shadow-2xl">
+                        <img src="{{ asset('foto/hp.png') }}" class="w-24 drop-shadow-2xl transform rotate-6">
+                        <img src="{{ asset('foto/playstation.png') }}" class="w-28 drop-shadow-2xl transform rotate-12">
                     </div>
                 </div>
 
@@ -133,10 +133,10 @@
                     @php
                     
     $categories = [
-        ['name' => 'HP & Smartphone', 'slug' => 'hp-smartphone', 'desc' => 'Berbagai pilihan Hp terbaru dan berkualitas', 'assets' => 'foto/phone-1.png'],
-        ['name' => 'Laptop', 'slug' => 'laptop', 'desc' => 'Laptop untuk bekerja, belajar dan lain lain', 'assets' => 'foto/laptop-1.png'],
-        ['name' => 'Kamera', 'slug' => 'kamera', 'desc' => 'Kamera yang berkualiatas dan canggih', 'assets' => 'foto/camera-1.png'],
-        ['name' => 'Playstation', 'slug' => 'playstation', 'desc' => 'konsuk gaming untuk hiburan dan event', 'assets' => 'foto/ps-1.png'],
+        ['name' => 'HP & Smartphone', 'slug' => 'hp-smartphone', 'desc' => 'Berbagai pilihan Hp terbaru dan berkualitas', 'assets' => 'foto/hp.png'],
+        ['name' => 'Laptop', 'slug' => 'laptop', 'desc' => 'Laptop untuk bekerja, belajar dan lain lain', 'assets' => 'foto/image-removebg-preview.png'],
+        ['name' => 'Kamera', 'slug' => 'kamera', 'desc' => 'Kamera yang berkualiatas dan canggih', 'assets' => 'foto/camera.png'],
+        ['name' => 'Playstation', 'slug' => 'playstation', 'desc' => 'konsuk gaming untuk hiburan dan event', 'assets' => 'foto/playstation.png'],
     ];
 @endphp
                     
@@ -160,16 +160,16 @@
                 <!-- ASET TERSEDIA SECTION -->
                 <div class="flex-1 overflow-hidden">
                     <h3 class="text-xl font-bold text-gray-700 mb-3 text-center">Aset Tersedia</h3>
-                    <h4 class="text-base font-semibold text-gray-600 mb-3">HP & Smartphone</h4>
+                    <h4 class="text-base font-semibold text-gray-600 mb-3">rekomendasi</h4>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                         @php
                             $phones = [
-                                ['name' => 'iPhone 15 pro max 256 GB', 'stock' => 12, 'img' => 'foto/iphone15.png'],
-                                ['name' => 'iPhone 14 pro max 256 GB', 'stock' => 15, 'img' => 'foto/iphone14.png'],
-                                ['name' => 'iPhone 17 pro max 256 GB', 'stock' => 10, 'img' => 'foto/iphone17.png'],
-                                ['name' => 'Samsung Galaxy Z Flip7 FE 256Gb 5G White', 'stock' => 12, 'img' => 'foto/zflip.png'],
-                                ['name' => 'Samsung Galaxy S25 Ultra 5G Galaxy 256GB', 'stock' => 20, 'img' => 'foto/s25ultra.png'],
+                                ['name' => 'iPhone 15 pro max 256 GB', 'stock' => 12, 'img' => 'foto/iphone 15 pro max 256 gb.png'],
+                                ['name' => 'iPhone 14 pro max 256 GB', 'stock' => 15, 'img' => 'foto/iphone 14 pro max 256 gb.png'],
+                                ['name' => 'ROG Flow X13', 'stock' => 10, 'img' => 'foto/OG Flow X13.png'],
+                                ['name' => 'Canon EOS M50', 'stock' => 12, 'img' => 'foto/Canon EOS M50.png'],
+                                ['name' => 'PlayStation 5 Standard', 'stock' => 5, 'img' => 'foto/PlayStation 5 Standard.png'],
                             ];
                         @endphp
                         @foreach($phones as $item)
