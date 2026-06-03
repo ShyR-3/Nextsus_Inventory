@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 
@@ -14,8 +15,15 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// REGISTER ROUTES
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
+// Google OAuth Routes
+Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
 // ================= 2. ADMIN ROUTES =================
-// Hanya bisa diakses jika login DAN role = admin
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     
     // Dashboard Admin
@@ -35,7 +43,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 // ================= 3. USER ROUTES =================
-// Hanya bisa diakses jika login DAN role = user
 Route::middleware(['auth', 'role:user'])->group(function () {
     
     // User Dashboard

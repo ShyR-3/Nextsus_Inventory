@@ -121,7 +121,7 @@
                         <p class="text-gray-300 text-sm mt-3">Pinjam aset yang anda butuhkan untuk<br>mendukung pekerjaan dan kegiatan anda</p>
                     </div>
                     <div class="hidden md:flex items-end gap-2">
-                        <img src="{{ asset('foto/image-removebg-preview.png') }}" class="w-24 drop-shadow-2xl transform -rotate-12">
+                        <img src="{{ asset('foto/image-removebg-preview.png') }}" class="w-32 drop-shadow-2xl transform -rotate-12">
                         <img src="{{ asset('foto/camera.png') }}" class="w-32 drop-shadow-2xl">
                         <img src="{{ asset('foto/hp.png') }}" class="w-24 drop-shadow-2xl transform rotate-6">
                         <img src="{{ asset('foto/playstation.png') }}" class="w-28 drop-shadow-2xl transform rotate-12">
