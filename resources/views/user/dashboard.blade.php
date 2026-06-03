@@ -30,12 +30,6 @@
         body { font-family: 'Poppins', sans-serif; }
         ::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
-        .truncate-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
     </style>
 </head>
 <body class="bg-gray-200 text-gray-800 h-screen overflow-hidden">
@@ -57,13 +51,15 @@
             </div>
 
             <nav class="px-4 space-y-1 mt-4 flex-1 overflow-y-auto">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-lg text-white font-medium">
+                <!-- Beranda (Aktif di Dashboard) -->
+                <a href="{{ route('user.dashboard') }}" class="flex items-center gap-3 px-4 py-3 {{ request()->is('user/dashboard') ? 'bg-white/10 rounded-lg text-white font-medium' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Beranda
                 </a>
+                
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span class="text-sm">peminjaman</span>
+                    <span class="text-sm">Peminjaman</span>
                 </a>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
@@ -78,23 +74,56 @@
                     <span class="text-sm">Notifikasi</span>
                 </a>
 
-                <div class="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">Aset</div>
+                <div class="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">ASET</div>
+                
+                <!-- Katalog Aset dengan Dropdown (FIXED LOGIC) -->
+                <div>
+                    <!-- Tombol Toggle -->
+                    <!-- Logic: Jika route diawali 'katalog', background jadi aktif -->
+                    <button id="katalog-toggle" class="w-full flex items-center gap-3 px-4 py-3 {{ request()->routeIs('katalog*') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white' }} rounded-lg transition">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="text-sm flex-1 text-left">Katalog aset</span>
+                        
+                        <!-- Panah: Logic: Jika route diawali 'katalog', panah berputar 180 derajat -->
+                        <svg id="katalog-arrow" class="w-4 h-4 transition-transform {{ request()->routeIs('katalog*') ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Submenu Katalog -->
+                    <!-- Logic: Jika route diawali 'katalog', class 'hidden' DIHAPUS (terbuka). Jika tidak, 'hidden' (tertutup). -->
+                    <div id="katalog-submenu" class="{{ request()->routeIs('katalog*') ? '' : 'hidden' }} pl-12 space-y-1 mt-1">
+                        <a href="{{ route('katalog.category', 'hp-smartphone') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/hp-smartphone') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            HP & Smartphone
+                        </a>
+                        <a href="{{ route('katalog.category', 'laptop') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/laptop') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            Laptop
+                        </a>
+                        <a href="{{ route('katalog.category', 'kamera') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/kamera') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            Kamera
+                        </a>
+                        <a href="{{ route('katalog.category', 'playstation') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/playstation') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            PlayStation
+                        </a>
+                    </div>
+                </div>
+
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
-                    <span class="text-sm">Katalog aset</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
                     <span class="text-sm">Aset saya</span>
                 </a>
 
-                <div class="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">Lainnya</div>
+                <div class="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">LAINNYA</div>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     <span class="text-sm">Pengaturan</span>
                 </a>
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     <span class="text-sm">Bantuan</span>
                 </a>
             </nav>
@@ -131,30 +160,28 @@
                 <!-- CATEGORY CARDS (4 Horizontal) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 flex-shrink-0">
                     @php
+                        $categories = [
+                            ['name' => 'HP & Smartphone', 'slug' => 'hp-smartphone', 'desc' => 'Berbagai pilihan Hp terbaru dan berkualitas', 'assets' => 'foto/hp.png'],
+                            ['name' => 'Laptop', 'slug' => 'laptop', 'desc' => 'Laptop untuk bekerja, belajar dan lain lain', 'assets' => 'foto/image-removebg-preview.png'],
+                            ['name' => 'Kamera', 'slug' => 'kamera', 'desc' => 'Kamera yang berkualiatas dan canggih', 'assets' => 'foto/camera.png'],
+                            ['name' => 'Playstation', 'slug' => 'playstation', 'desc' => 'Konsol gaming untuk hiburan dan event', 'assets' => 'foto/playstation.png'],
+                        ];
+                    @endphp
                     
-    $categories = [
-        ['name' => 'HP & Smartphone', 'slug' => 'hp-smartphone', 'desc' => 'Berbagai pilihan Hp terbaru dan berkualitas', 'assets' => 'foto/hp.png'],
-        ['name' => 'Laptop', 'slug' => 'laptop', 'desc' => 'Laptop untuk bekerja, belajar dan lain lain', 'assets' => 'foto/image-removebg-preview.png'],
-        ['name' => 'Kamera', 'slug' => 'kamera', 'desc' => 'Kamera yang berkualiatas dan canggih', 'assets' => 'foto/camera.png'],
-        ['name' => 'Playstation', 'slug' => 'playstation', 'desc' => 'konsuk gaming untuk hiburan dan event', 'assets' => 'foto/playstation.png'],
-    ];
-@endphp
-                    
-                    
-@foreach($categories as $cat)
-<div class="bg-nexus-green rounded-2xl p-5 text-white flex flex-col items-start relative overflow-hidden shadow-lg">
-    <h4 class="text-sm font-semibold mb-2">{{ $cat['name'] }}</h4>
-    <p class="text-[11px] text-gray-200 leading-tight mb-3 max-w-[60%]">{{ $cat['desc'] }}</p>
-    
-    <!-- LINK KE KATALOG -->
-    <a href="{{ route('katalog.category', $cat['slug']) }}" 
-       class="bg-white text-nexus-green text-[10px] font-bold py-1.5 px-4 rounded-full hover:bg-gray-100 transition z-10 inline-block">
-       LIHAT ASET
-    </a>
-    
-    <img src="{{ asset($cat['assets']) }}" class="absolute -bottom-2 -right-2 w-28 h-28 object-contain drop-shadow-xl">
-</div>
-@endforeach
+                    @foreach($categories as $cat)
+                    <div class="bg-nexus-green rounded-2xl p-5 text-white flex flex-col items-start relative overflow-hidden shadow-lg">
+                        <h4 class="text-sm font-semibold mb-2">{{ $cat['name'] }}</h4>
+                        <p class="text-[11px] text-gray-200 leading-tight mb-3 max-w-[60%]">{{ $cat['desc'] }}</p>
+                        
+                        <!-- LINK KE KATALOG -->
+                        <a href="{{ route('katalog.category', $cat['slug']) }}" 
+                           class="bg-white text-nexus-green text-[10px] font-bold py-1.5 px-4 rounded-full hover:bg-gray-100 transition z-10 inline-block">
+                           LIHAT ASET
+                        </a>
+                        
+                        <img src="{{ asset($cat['assets']) }}" class="absolute -bottom-2 -right-2 w-28 h-28 object-contain drop-shadow-xl">
+                    </div>
+                    @endforeach
                 </div>
 
                 <!-- ASET TERSEDIA SECTION -->
@@ -200,6 +227,29 @@
 
         </main>
     </div>
+
+    <!-- JavaScript untuk Toggle Submenu Manual -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const katalogToggle = document.getElementById('katalog-toggle');
+            const katalogSubmenu = document.getElementById('katalog-submenu');
+            const katalogArrow = document.getElementById('katalog-arrow');
+            
+            if (katalogToggle) {
+                katalogToggle.addEventListener('click', function() {
+                    // Toggle hidden class (Manual Click)
+                    // Jika hidden, remove hidden (buka). Jika tidak hidden, add hidden (tutup)
+                    if (katalogSubmenu.classList.contains('hidden')) {
+                        katalogSubmenu.classList.remove('hidden');
+                        katalogArrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        katalogSubmenu.classList.add('hidden');
+                        katalogArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>

@@ -68,10 +68,38 @@
                 </a>
 
                 <div class="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">Aset</div>
-                <a href="{{ route('katalog') }}" class="flex items-center gap-3 px-4 py-3 bg-white/10 text-white rounded-lg transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
-                    <span class="text-sm">Katalog aset</span>
-                </a>
+                
+                <!-- ✅ KATALOG ASET DENGAN DROPDOWN (BARU) -->
+                <div>
+                    <button id="katalog-toggle" class="w-full flex items-center gap-3 px-4 py-3 bg-white/10 text-white rounded-lg transition">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="text-sm flex-1 text-left">Katalog aset</span>
+                        <!-- Panah dropdown (selalu terbuka di halaman katalog) -->
+                        <svg id="katalog-arrow" class="w-4 h-4 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Submenu Katalog (SELALU TERBUKA di halaman katalog) -->
+                    <div id="katalog-submenu" class="pl-12 space-y-1 mt-1">
+                        <a href="{{ route('katalog.category', 'hp-smartphone') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/hp-smartphone') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            HP & Smartphone
+                        </a>
+                        <a href="{{ route('katalog.category', 'laptop') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/laptop') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            Laptop
+                        </a>
+                        <a href="{{ route('katalog.category', 'kamera') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/kamera') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            Kamera
+                        </a>
+                        <a href="{{ route('katalog.category', 'playstation') }}" class="block px-4 py-2 text-sm {{ request()->is('katalog/playstation') ? 'text-white bg-white/10' : 'text-gray-400 hover:text-white hover:bg-white/5' }} rounded-lg transition">
+                            PlayStation
+                        </a>
+                    </div>
+                </div>
+                <!-- ✅ AKHIR DROPDOWN KATALOG -->
+
                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition">
                     <span class="text-sm">Aset saya</span>
                 </a>
@@ -86,7 +114,7 @@
             </nav>
         </aside>
 
-        <!-- MAIN CONTENT -->
+        <!-- MAIN CONTENT (TIDAK DIUBAH - FOTO TETAP SAMA) -->
         <main class="flex-1 flex flex-col h-screen overflow-hidden">
             
             <!-- HEADER -->
@@ -109,7 +137,7 @@
                     <p class="text-gray-600 text-sm">Pilih aset yang ingin Anda pinjam</p>
                 </div>
 
-                <!-- Grid Aset -->
+                <!-- Grid Aset (KODE FOTO TETAP SAMA PERSIS) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     @forelse($assets as $item)
                     <div class="bg-nexus-main rounded-2xl p-4 text-white flex flex-col items-center text-center shadow-lg hover:shadow-xl transition">
@@ -140,6 +168,27 @@
 
         </main>
     </div>
+
+    <!-- ✅ JavaScript untuk Toggle Submenu (TAMBAHAN BARU) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const katalogToggle = document.getElementById('katalog-toggle');
+            const katalogSubmenu = document.getElementById('katalog-submenu');
+            const katalogArrow = document.getElementById('katalog-arrow');
+            
+            if (katalogToggle) {
+                katalogToggle.addEventListener('click', function() {
+                    if (katalogSubmenu.classList.contains('hidden')) {
+                        katalogSubmenu.classList.remove('hidden');
+                        katalogArrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        katalogSubmenu.classList.add('hidden');
+                        katalogArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
