@@ -3,84 +3,95 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-// Nanti import model database di sini:
-// use App\Models\Asset;
-// use App\Models\Booking;
-// use App\Models\User;
+use App\Models\Asset;
+use App\Models\User;
+use App\Models\Borrowing;
 
 class DashboardController extends Controller
 {
     /**
-     * 1. Dashboard Utama
+     * Dashboard Admin
      */
     public function index()
     {
-        // Statistik sementara (dummy)
+        // ✅ STATS REALTIME DARI DATABASE
         $stats = [
-            'total_assets' => 150,
-            'available_assets' => 120,
-            'borrowed_assets' => 30,
-            'total_users' => 45,
-            'pending_bookings' => 0,
-            'approved_bookings' => 0,
+            'total_assets' => Asset::count(),
+            'available_assets' => Asset::where('status', 'available')->where('stock', '>', 0)->sum('stock'),
+            'borrowed_assets' => Borrowing::where('status', 'borrowed')->count(),
+            'total_users' => User::where('role', 'user')->count(),
+            'pending_bookings' => Borrowing::where('status', 'pending')->count(),
         ];
 
-        // Tabel kosong (data sudah dihapus sesuai permintaan)
-        $recentBookings = [];
+        // Recent bookings (jika ada)
+        $recentBookings = Borrowing::with(['user', 'asset'])
+            ->latest()
+            ->take(5)
+            ->get()
+            ->map(function($booking) {
+                return [
+                    'id' => $booking->id,
+                    'user' => $booking->user->name ?? 'Unknown',
+                    'asset' => $booking->asset->name ?? 'Unknown',
+                    'date' => $booking->borrow_date->format('d M Y'),
+                    'status' => ucfirst($booking->status),
+                ];
+            });
 
         return view('admin.dashboard', compact('stats', 'recentBookings'));
     }
 
     /**
-     * 2. Halaman Daftar Aset
-     */
-    public function assets()
-    {
-        return view('admin.assets'); // Nanti buat file view-nya
-    }
-
-    /**
-     * 3. Simpan Aset Baru
-     */
-    public function storeAsset(Request $request)
-    {
-        // Validasi & simpan ke database nanti di sini
-        return back()->with('success', 'Aset berhasil ditambahkan!');
-    }
-
-    /**
-     * 4. Halaman Daftar Peminjaman
+     * Bookings Management
      */
     public function bookings()
     {
-        return view('admin.bookings');
+        $bookings = Borrowing::with(['user', 'asset'])
+            ->latest()
+            ->paginate(15);
+        
+        return view('admin.bookings', compact('bookings'));
     }
 
     /**
-     * 5. Approve Peminjaman
+     * Approve Booking
      */
     public function approveBooking($id)
     {
-        // Update status booking ke 'Approved' nanti di sini
-        return back()->with('success', 'Peminjaman disetujui!');
+        $borrowing = Borrowing::findOrFail($id);
+        $borrowing->update([
+            'status' => 'approved',
+            'approved_at' => now(),
+        ]);
+
+        return back()->with('success', 'Peminjaman berhasil disetujui!');
     }
 
     /**
-     * 6. Reject Peminjaman
+     * Reject Booking
      */
     public function rejectBooking($id)
     {
-        // Update status booking ke 'Rejected' nanti di sini
-        return back()->with('error', 'Peminjaman ditolak!');
+        $borrowing = Borrowing::findOrFail($id);
+        $borrowing->update(['status' => 'rejected']);
+
+        return back()->with('success', 'Peminjaman ditolak!');
     }
 
     /**
-     * 7. Halaman Kelola User
+     * Users Management
      */
     public function users()
     {
-        return view('admin.users');
+        $users = User::where('role', 'user')->latest()->paginate(10);
+        return view('admin.users', compact('users'));
+    }
+
+    /**
+     * Reports Page
+     */
+    public function reports()
+    {
+        return back()->with('info', 'Fitur laporan sedang dalam pengembangan.');
     }
 }

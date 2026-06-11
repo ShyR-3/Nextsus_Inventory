@@ -44,18 +44,13 @@
         
         <!-- ================= SIDEBAR ================= -->
         <aside class="w-64 bg-gradient-to-b from-nexus-dark to-black text-white flex flex-col flex-shrink-0">
-            <div class="p-6 flex items-center gap-3 border-b border-white/10">
-                <div class="flex items-center gap-2">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                    <div>
-                        <div class="text-xl font-bold tracking-wide">NEXUS</div>
-                        <div class="text-[8px] tracking-widest opacity-80">INVENTORY</div>
-                    </div>
-                </div>
+            
+            <!-- Logo -->
+            <div class="p-6 flex items-center justify-center border-b border-white/10">
+                <img src="{{ asset('foto/logo.png') }}" alt="Nexus Inventory" class="h-16 w-auto">
             </div>
 
+            <!-- Navigation -->
             <nav class="px-3 py-4 space-y-1 flex-1 overflow-y-auto">
                 <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Menu Utama</div>
                 
@@ -148,6 +143,7 @@
                 </div>
             </div>
         </aside>
+        <!-- ================= END SIDEBAR ================= -->
 
         <!-- ================= MAIN CONTENT ================= -->
         <main class="flex-1 flex flex-col h-screen overflow-hidden">

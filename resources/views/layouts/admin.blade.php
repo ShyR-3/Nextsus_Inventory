@@ -49,17 +49,10 @@
         
         <!-- ================= SIDEBAR ================= -->
         <aside class="w-64 bg-gradient-to-b from-nexus-dark to-black text-white flex flex-col flex-shrink-0">
+            
             <!-- Logo -->
-            <div class="p-6 flex items-center gap-3 border-b border-white/10">
-                <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                    <svg class="w-5 h-5 text-nexus-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                    </svg>
-                </div>
-                <div>
-                    <div class="text-lg font-bold tracking-wide">NEXUS</div>
-                    <div class="text-[10px] tracking-widest opacity-80">INVENTORY</div>
-                </div>
+            <div class="p-6 flex items-center justify-center border-b border-white/10">
+                <img src="{{ asset('foto/logo.png') }}" alt="Nexus Inventory" class="h-16 w-auto">
             </div>
 
             <!-- Navigation -->
@@ -68,16 +61,16 @@
                 
                 <!-- Dashboard -->
                 <a href="{{ route('admin.dashboard') }}" 
-                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.dashboard') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white' }} rounded-lg transition">
+                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.dashboard') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
                     <span class="text-sm">Dashboard</span>
                 </a>
                 
-                <!-- Aset -->
+                <!-- Kelola Aset -->
                 <a href="{{ route('admin.assets.index') }}" 
-                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.assets.*') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white' }} rounded-lg transition">
+                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.assets.*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                     </svg>
@@ -86,7 +79,7 @@
                 
                 <!-- Peminjaman -->
                 <a href="{{ route('admin.bookings') }}" 
-                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.bookings*') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white' }} rounded-lg transition">
+                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.bookings*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                     </svg>
@@ -95,7 +88,7 @@
                 
                 <!-- Pengguna -->
                 <a href="{{ route('admin.users') }}" 
-                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.users*') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white' }} rounded-lg transition">
+                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.users*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
@@ -106,7 +99,7 @@
                 
                 <!-- Laporan -->
                 <a href="{{ route('admin.reports') }}" 
-                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.reports*') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white' }} rounded-lg transition">
+                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.reports*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
