@@ -76,7 +76,8 @@
         <div class="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="bg-nexus-green px-6 py-4 flex items-center justify-between">
                 <h3 class="text-white font-bold text-lg">Peminjaman Terbaru</h3>
-                <a href="{{ route('admin.bookings') }}" class="text-white text-sm hover:underline">Lihat Semua</a>
+                <!-- ✅ UPDATED: Menggunakan route admin.borrowings -->
+                <a href="{{ route('admin.borrowings') }}" class="text-white text-sm hover:underline">Lihat Semua</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full">

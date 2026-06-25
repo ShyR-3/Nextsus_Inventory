@@ -77,16 +77,16 @@
                     <span class="text-sm">Kelola Aset</span>
                 </a>
                 
-                <!-- Peminjaman -->
-                <a href="{{ route('admin.bookings') }}" 
-                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.bookings*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
+                <!-- ✅ UPDATED: Peminjaman (menggunakan route admin.borrowings) -->
+                <a href="{{ route('admin.borrowings') }}" 
+                   class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.borrowings*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                     </svg>
                     <span class="text-sm">Peminjaman</span>
                 </a>
                 
-                <!-- Pengguna -->
+                <!-- ✅ UPDATED: Pengguna (menggunakan route admin.users) -->
                 <a href="{{ route('admin.users') }}" 
                    class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.users*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,7 +97,7 @@
 
                 <div class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">Lainnya</div>
                 
-                <!-- Laporan -->
+                <!-- ✅ UPDATED: Laporan (menggunakan route admin.reports) -->
                 <a href="{{ route('admin.reports') }}" 
                    class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('admin.reports*') ? 'bg-white text-nexus-dark font-semibold rounded-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white rounded-lg transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
