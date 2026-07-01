@@ -14,16 +14,61 @@ class Asset extends Model
         'category',
         'specification',
         'stock',
-        'status',  // ✅ Sekarang hanya: available / unavailable
+        'status',
         'image',
+        'price_per_day',
     ];
 
     protected $casts = [
         'stock' => 'integer',
+        'price_per_day' => 'decimal:2',
     ];
 
     /**
-     * Helper: Cek apakah aset tersedia
+     * ========================================
+     * RELASI (RELATIONSHIPS)
+     * ========================================
+     */
+
+    /**
+     * Relasi ke Borrowing
+     * Satu aset bisa memiliki banyak peminjaman
+     */
+    public function borrowings()
+    {
+        return $this->hasMany(Borrowing::class);
+    }
+
+    /**
+     * ========================================
+     * SCOPES (QUERY SCOPES)
+     * ========================================
+     */
+
+    /**
+     * Scope untuk filter berdasarkan kategori
+     */
+    public function scopeByCategory($query, $category)
+    {
+        return $query->where('category', $category);
+    }
+
+    /**
+     * Scope untuk aset yang tersedia
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('status', 'available')->where('stock', '>', 0);
+    }
+
+    /**
+     * ========================================
+     * ACCESSORS & HELPERS
+     * ========================================
+     */
+
+    /**
+     * Cek apakah aset tersedia untuk dipinjam
      */
     public function isAvailable()
     {

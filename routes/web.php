@@ -50,12 +50,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // User Management
     Route::get('/users', [AdminDashboard::class, 'users'])->name('users');
     
-    // Reports (Placeholder)
-    Route::get('/reports', function() {
-        return view('admin.reports');
-    })->name('reports');
+    // Reports
+    Route::get('/reports', [AdminDashboard::class, 'reports'])->name('reports');
+    
+    // Settings Routes
+    Route::get('/settings', [AdminDashboard::class, 'settings'])->name('settings');
+    Route::put('/settings/profile', [AdminDashboard::class, 'updateProfile'])->name('settings.update-profile');
+    Route::put('/settings/password', [AdminDashboard::class, 'updatePassword'])->name('settings.update-password');
+    Route::put('/settings/application', [AdminDashboard::class, 'updateApplication'])->name('settings.update-app');
 });
-
 // ================= 3. USER ROUTES =================
 Route::middleware(['auth', 'role:user'])->group(function () {
     
@@ -67,7 +70,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog');
     Route::get('/katalog/{category}', [CatalogController::class, 'category'])->name('katalog.category');
 
-    // Borrowing Routes (User) - HANYA 1 SET, TIDAK ADA DUPLIKASI
+    // Borrowing Routes (User)
     Route::get('/ajukan-peminjaman/{asset}', [BorrowingController::class, 'create'])
         ->name('user.borrowing.create');
     Route::post('/ajukan-peminjaman/{asset}/confirm', [BorrowingController::class, 'confirm'])
@@ -76,4 +79,18 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         ->name('user.borrowing.store');
     Route::get('/riwayat-peminjaman', [BorrowingController::class, 'history'])
         ->name('user.borrowing.history');
+    
+    // Aset Saya Route
+    Route::get('/aset-saya', [BorrowingController::class, 'myAssets'])
+        ->name('user.assets');
+    
+    // Pengembalian Aset Routes
+    Route::get('/pengembalian-aset', [BorrowingController::class, 'returns'])->name('user.returns');
+    Route::post('/pengembalian-aset/{id}/confirm', [BorrowingController::class, 'confirmReturn'])->name('user.returns.confirm');
+    
+    //  User Settings Routes
+    Route::get('/pengaturan', [BorrowingController::class, 'settings'])->name('user.settings');
+    Route::put('/pengaturan/profil', [BorrowingController::class, 'updateProfile'])->name('user.settings.update-profile');
+    Route::put('/pengaturan/password', [BorrowingController::class, 'updatePassword'])->name('user.settings.update-password');
+    Route::put('/pengaturan/notifikasi', [BorrowingController::class, 'updateNotifications'])->name('user.settings.update-notifications');
 });

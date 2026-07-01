@@ -26,16 +26,25 @@ class Borrowing extends Model
         'approved_at' => 'datetime',
     ];
 
+    /**
+     * Relasi ke User
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Relasi ke Asset
+     */
     public function asset()
     {
         return $this->belongsTo(Asset::class);
     }
 
+    /**
+     * Get status badge color
+     */
     public function getStatusBadgeAttribute()
     {
         $colors = [
@@ -48,6 +57,9 @@ class Borrowing extends Model
         return $colors[$this->status] ?? 'bg-gray-100 text-gray-800';
     }
 
+    /**
+     * Get status label in Indonesian
+     */
     public function getStatusLabelAttribute()
     {
         $labels = [
